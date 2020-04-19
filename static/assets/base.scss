@@ -1,0 +1,29 @@
+$primary-color: #00adb5;
+$secondary-color: #313131;
+$dark-color: #dcdcdc;
+$light-color: #414141;
+$grey-dark-color: #313131;
+$grey-light-color: #414141;
+$border-color: #525252;
+
+@import 'spectre/src/spectre';
+@import 'fonts/fonts.scss';
+@use 'animate/animate.min.css';
+
+body {
+    font-family: 'Archivo', $body-font-family;
+}
+
+header {
+    padding: 5px;
+}
+
+.post-content {
+    padding: 5px;
+    margin: 5px;
+}
+
+a.spacebar {
+    line-height: 1px;
+    height: 1px;
+}

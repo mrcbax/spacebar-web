@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    title= title
+    link(rel='stylesheet', href='/stylesheets/base.css')
+  body
+    header(class="navbar")
+      section(class="navbar-section")
+        a(href="/", class="navbar-brand mr-2")
+          h1(class="title") Spacebars
+      section(class="navbar-section")
+        a(href="/", class="btn btn-link") Home
+        a(href="https://keybase.io/mrcbax", class="btn btn-link") Keybase
+        a(href="https://github.com/LogoiLab", class="btn btn-link") GitHub
+        a(href="/rss.xml", class="btn") RSS
+    block content

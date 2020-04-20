@@ -1,6 +1,11 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  div(class='panel column col-6 col-xs-12' style='margin: auto;')
+    div(class='panel-header')
+      div(class='panel-title')
+        h2(style='text-align: center;')= error.status + ' - ' + message
+    div(class='panel-body')
+      pre(class='code') #{error.stack}
+    div(class='panel-footer')
+      a(class='btn btn-primary' href='./' style='width: 100%') RELOAD

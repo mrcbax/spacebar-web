@@ -20,25 +20,26 @@ block content
               td
                 a(href=val.loc)= val.loc
               td
-                button(class="btn" data-clipboard-target=`#${index}`)
+                button(class="btn btn-primary btn-copy" data-clipboard-target=`#${index}`)
                   p(id=index)= val.spacebar
-                    i(class='far fa-copy')
+                    i(class='far fa-copy' style='vertical-align: top;')
         tfoot
             tr
-                th Created
-                th Name
-                th Description
-                th Location
-                th Spacebar
+              th Created
+              th Name
+              th Description
+              th Location
+              th Spacebar
 
   script(src='/include/datatables.js')
   script(type='text/javascript').
     $(document).ready(function() {
       $('#spacebars').DataTable({
+        responsive: true,
         "columnDefs": [
           { "width": "13ch", "targets": 0},
           { "width": "10%", "targets": 3},
-          { "width": "1%", "targets": 4 }
+          { "width": "1%", "className": "text-center", "targets": 4 }
         ]
        });
     });

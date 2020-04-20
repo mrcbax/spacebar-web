@@ -18,6 +18,10 @@ header {
     padding: 5px;
 }
 
+.title {
+    font-family: 'Sans Forgetica';
+}
+
 .post-content {
     padding: 5px;
     margin: 5px;
@@ -65,10 +69,10 @@ table.dataTable {
 }
 
 .paginate_button {
-    @extend .btn;
     color: $dark-color !important;
     background: none !important;
-    .current {
-        @extend .btn-primary;
-    }
+}
+
+.btn-copy {
+    height: 1rem;
 }

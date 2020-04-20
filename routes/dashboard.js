@@ -8,17 +8,17 @@ router.get('/', async function(req, res){
             name: 'testbar1',
             desc: 'testbardesc1',
             loc: 'https://example.com',
-            spacebar: 'bar'
+            spacebar: ''
         },
         {
             date: '2020',
             name: 'testbar2',
             desc: 'testbardesc2',
             loc: 'https://example.com',
-            spacebar: 'bar2'
+            spacebar: ''
         }
     ];
-    res.render('dashboard', {spacebars: spacebar});
+    res.render('dashboard', {spacebars: spacebar, logged_in: true});
 });
 
 module.exports = router;

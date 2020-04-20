@@ -3,13 +3,13 @@ var router = express.Router();
 var passport = require('passport');
 
 router.post('/login',
-         passport.authenticate('local', { successRedirect: '/',
+         passport.authenticate('local', { successRedirect: '/dashboard',
                                           failureRedirect: '/login',
                                           failureFlash: true })
         );
 
 router.get('/login', async function(req, res) {
-    res.render('login', { title: 'Log In' });
+    res.render('login', { title: 'Log In', logged_in: false});
 });
 
 router.get('/logout', async function(req, res){

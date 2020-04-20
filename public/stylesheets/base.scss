@@ -27,3 +27,48 @@ a.spacebar {
     line-height: 1px;
     height: 1px;
 }
+
+table.dataTable {
+    thead {
+        background-color: $border-color;
+        color: $dark-color;
+    }
+    tfoot {
+        background-color: $border-color;
+        color: $dark-color;
+    }
+    background-color: $light-color;
+    color: $secondary-color;
+}
+
+.dataTables_wrapper {
+    @extend .form-group;
+    input {
+        @extend .form-input;
+        width: auto;
+    }
+    select {
+        @extend .form-select;
+        width: auto;
+        -webkit-appearance: none;
+    }
+    label {
+        @extend .form-label;
+        color: $dark-color;
+        width: auto;
+    }
+    color: $dark-color;
+}
+
+.dataTables_paginate {
+    color: $dark-color !important;
+}
+
+.paginate_button {
+    @extend .btn;
+    color: $dark-color !important;
+    background: none !important;
+    .current {
+        @extend .btn-primary;
+    }
+}

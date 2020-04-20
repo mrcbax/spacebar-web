@@ -1,0 +1,45 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/include/datatables.css')
+
+  table(id='spacebars', class='display compact table-striped table-hover', style='width:100%')
+        thead
+            tr
+              th Created
+              th Name
+              th Description
+              th Location
+              th Spacebar
+        tbody
+          each val, index in spacebars
+            tr
+              td= val.date
+              td= val.name
+              td= val.desc
+              td
+                a(href=val.loc)= val.loc
+              td
+                button(class="btn" data-clipboard-target=`#${index}`)
+                  p(id=index)= val.spacebar
+                    i(class='far fa-copy')
+        tfoot
+            tr
+                th Created
+                th Name
+                th Description
+                th Location
+                th Spacebar
+
+  script(src='/include/datatables.js')
+  script(type='text/javascript').
+    $(document).ready(function() {
+      $('#spacebars').DataTable({
+        "columnDefs": [
+          { "width": "13ch", "targets": 0},
+          { "width": "10%", "targets": 3},
+          { "width": "1%", "targets": 4 }
+        ]
+       });
+    });
+  script(src='/scripts/clipboard.js')

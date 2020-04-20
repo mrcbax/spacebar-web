@@ -8,11 +8,11 @@ router.post('/login',
                                           failureFlash: true })
         );
 
-router.get('/login', function(req, res, next) {
+router.get('/login', async function(req, res) {
     res.render('login', { title: 'Log In' });
 });
 
-router.get('/logout', function(req, res){
+router.get('/logout', async function(req, res){
     loggedIn = false;
     req.logout();
     res.redirect('/');

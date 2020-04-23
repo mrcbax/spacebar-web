@@ -4,16 +4,38 @@ block content
   div(class='panel column col-4 col-xs-12' style='margin: auto;')
     div(class='panel-header')
       div(class='panel-title')
-        h2(style='text-align: center;') Log In
+        h2(style='text-align: center;') Login
     div(class='panel-body')
       form(action='/login' method='post' class='form-group')
         div
           label(class="form-label") Username:
-          input(type='text' name='username' placeholder='email@example.com' class="form-input")
-        div
+          input(type='text' name='username' placeholder='Username' class="form-input")
           label(class="form-label") Password:
-          input(type='password' name='password' placeholder='Password' class='form-input')
+        div(class='input-group')
+          input(type='password' name='password' placeholder='Password' id='password' class='form-input')
+          a(class='btn btn-primary input-group-btn' onClick='show()')
+            i(class='fa fa-eye-slash' id='toggle')
+          script.
+            function show() {
+              var x = document.getElementById("password");
+              var y = document.getElementById("toggle");
+              if (x.type === "password") {
+                x.type = "text";
+                y.classList.remove("fa-eye-slash");
+                y.classList.add("fa-eye");
+              } else {
+                x.type = "password";
+                y.classList.remove("fa-eye");
+                y.classList.add("fa-eye-slash");
+              }
+            }
         div
           br
-          input(type='submit' value='Log In' class='btn btn-primary' style='width: 100%;')
+          input(type='submit' value='Login' class='btn btn-primary' style='width: 100%;')
     div(class='panel-footer')
+      div(class='container')
+        div(class='columns')
+          div(class='column col-lg-auto col-6')
+            a(href='/signup' class='btn btn-link') Create Account
+          div(class='column' style='text-align: right;')
+            a(href='/forgot' class='btn btn-link') Forgot Password?

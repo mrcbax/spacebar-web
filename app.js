@@ -12,6 +12,8 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth.js');
 var dashRouter = require('./routes/dashboard.js');
 
+var db = '';//require('./util/database.js');
+
 var app = express();
 
 var passport = require('passport')
@@ -58,27 +60,40 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-var user_cache = {};
+passport.use(new LocalStrategy({
+    usernameField: 'email',
+    passwordField: 'pass'
+},
+                               (username, password, done) => {
+                                   log.debug("Login process:", username);
+                                   return db.one("SELECT id, username, email, is_admin " +
+                                                 "FROM users " +
+                                                 "WHERE email=$1 AND password=$2", [username, password])
+                                       .then((result)=> {
+                                           return done(null, result);
+                                       })
+                                       .catch((err) => {
+                                           log.error("/login: " + err);
+                                           return done(null, false, {message:'Wrong user name or password'});
+                                       });
+                               }));
 
-passport.serializeUser(function(user, next) {
-    let id = user.username;
-    user_cache[id] = user;
-    next(null, id);
+passport.serializeUser((user, done)=>{
+    log.debug("serialize ", user);
+    done(null, user.id);
 });
 
-passport.deserializeUser(function(id, next) {
-    next(null, user_cache[id]);
+passport.deserializeUser((id, done)=>{
+    log.debug("deserialize ", id);
+    db.one("SELECT id, username, email, is_admin FROM users " +
+           "WHERE id = $1", [id])
+        .then((user)=>{
+            //log.debug("deserializeUser ", user);
+            done(null, user);
+        })
+        .catch((err)=>{
+            done(new Error(`User with the id ${id} does not exist`));
+        });
 });
-
-passport.use(new LocalStrategy(function(username, password, done) {
-    // database.login(username, password, done);
-    if (username === 'admin' && password === 'admin') {
-        loggedIn = true;
-        console.log('in');
-        done(null, {'username': username, 'password': password});
-    } else {
-        done(null, false);
-    }
-}));
 
 module.exports = app;

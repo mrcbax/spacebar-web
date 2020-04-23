@@ -1,0 +1,35 @@
+extends layout
+
+block content
+  div(class='panel column col-4 col-xs-12' style='margin: auto;')
+    div(class='panel-header')
+      div(class='panel-title')
+        h2(style='text-align: center;') Create Account
+    div(class='panel-body')
+      form(action='/login' method='post' class='form-group')
+        div
+          label(class="form-label") Username:
+          input(type='text' name='username' placeholder='Username' class="form-input alpha-no-spaces")
+          script.
+            $('.alpha-no-spaces').mask("A", {translation: {"A": { pattern: /[\w\-\_]/, recursive: true }}});
+        div
+          label(class="form-label") Email:
+          input(type='email' id='email' name='email' placeholder='email@example.com' class="form-input alpha-no-spaces")
+          script.
+            $('#email').mask("A", {translation: {"A": { pattern: /[\w@\-\.\+\_]/, recursive: true }}});
+        div
+          label(class="form-label") Password:
+          input(type='password' name='password' placeholder='Password' class='form-input')
+        div
+          label(class="form-label") Repeat Password:
+          input(type='password' name='password' placeholder='Password' class='form-input')
+        div
+          br
+          input(type='submit' value='Create Account' class='btn btn-primary' style='width: 100%;')
+    div(class='panel-footer')
+      div(class='container')
+        div(class='columns')
+          div(class='column col-lg-auto col-6')
+            a(href='/login' class='btn btn-link') I already have an account.
+          div(class='column' style='text-align: right;')
+            a(href='/forgot' class='btn btn-link') Forgot Password?

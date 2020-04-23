@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  div(class='panel column col-4 col-xs-12' style='margin: auto;')
+    div(class='panel-header')
+      div(class='panel-title')
+        h2(style='text-align: center;') Reset Your Password
+    div(class='panel-body')
+      form(action='/login' method='post' class='form-group')
+        div
+          label(class="form-label") Enter your email:
+          input(type='email' name='email' placeholder='email@example.com' class="form-input")
+        div
+          br
+          input(type='submit' value='Send Reset Link' class='btn btn-primary' style='width: 100%;')
+    div(class='panel-footer')
+      div(class='container')
+        div(class='columns')
+          div(class='column col-lg-auto col-6')
+            a(href='/signup' class='btn btn-link') Create Account
+          div(class='column' style='text-align: right;')
+            a(href='/forgot_api' class='btn btn-link') Reset Using API Keys

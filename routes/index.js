@@ -11,4 +11,25 @@ router.get('/', async function(req, res, next) {
     });
 });
 
+router.get('/forgot', async function(req, res, next) {
+    res.render('forgot', {
+        title: 'Spacebars',
+        logged_in: false
+    });
+});
+
+router.get('/forgot_api', async function(req, res, next) {
+    res.render('forgot_api', {
+        title: 'Spacebars',
+        logged_in: false
+    });
+});
+
+router.get('/signup', async function(req, res, next) {
+    res.render('create_user', {
+        title: 'Spacebars',
+        logged_in: false
+    });
+});
+
 module.exports = router;

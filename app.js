@@ -6,13 +6,20 @@ var logger = require('morgan');
 var sassMiddleware = require('node-sass-middleware');
 var session = require("express-session");
 var bodyParser = require("body-parser");
+var hcaptcha = require('express-hcaptcha');
+var cors = require('cors');
+const bcrypt = require('bcrypt');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth.js');
 var dashRouter = require('./routes/dashboard.js');
 
-var db = '';//require('./util/database.js');
+var fs = require('fs');
+var config = JSON.parse(fs.readFileSync('./config.json', 'utf8'));
+const SECRET = config.hcaptcha_key;
+
+var db = require('./util/database.js');
 
 var app = express();
 
@@ -22,6 +29,9 @@ var passport = require('passport')
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+// enable cors
+app.options('*', cors());
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -34,13 +44,19 @@ app.use(sassMiddleware({
     indentedSyntax: false, // true = .sass and false = .scss
     sourceMap: true
 }));
-app.use(bodyParser());
-app.use(session({ secret: 'spacebar' }));
+app.use(bodyParser.json());
+app.use(session({
+    secret: 'spacebar',
+    resave: false,
+    saveUninitialized: false,
+		cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 }
+}));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(cors());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/account', usersRouter);
 app.use('/', authRouter);
 app.use('/dashboard', dashRouter);
 
@@ -60,40 +76,43 @@ app.use(function(err, req, res, next) {
     res.render('error');
 });
 
-passport.use(new LocalStrategy({
-    usernameField: 'email',
-    passwordField: 'pass'
-},
-                               (username, password, done) => {
-                                   log.debug("Login process:", username);
-                                   return db.one("SELECT id, username, email, is_admin " +
-                                                 "FROM users " +
-                                                 "WHERE email=$1 AND password=$2", [username, password])
-                                       .then((result)=> {
-                                           return done(null, result);
-                                       })
-                                       .catch((err) => {
-                                           log.error("/login: " + err);
-                                           return done(null, false, {message:'Wrong user name or password'});
-                                       });
-                               }));
+passport.use(new LocalStrategy((username, password, cb) => {
+		db.query('SELECT id, username, password, is_admin FROM users WHERE username=$1', [username], (err, result) => {
+			  if(err) {
+				    return cb(err);
+			  }
 
-passport.serializeUser((user, done)=>{
-    log.debug("serialize ", user);
-    done(null, user.id);
+			  if(result.rows.length > 0) {
+				    const first = result.rows[0];
+				    bcrypt.compare(password, first.password, function(err, res) {
+					      if(res) {
+						        return cb(null, { id: first.id, username: first.username, type: first.type });
+					      } else {
+						        return cb(null, false);
+					      }
+				    });
+			  } else {
+				    return cb(null, false);
+			  }
+		});
+}));
+
+passport.serializeUser((user, done) => {
+		done(null, user.id);
 });
 
-passport.deserializeUser((id, done)=>{
-    log.debug("deserialize ", id);
-    db.one("SELECT id, username, email, is_admin FROM users " +
-           "WHERE id = $1", [id])
-        .then((user)=>{
-            //log.debug("deserializeUser ", user);
-            done(null, user);
-        })
-        .catch((err)=>{
-            done(new Error(`User with the id ${id} does not exist`));
-        });
+passport.deserializeUser((id, cb) => {
+		db.query('SELECT id, username, is_admin FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
+			  if(err) {
+				    return cb(err);
+			  }
+
+			  cb(null, results.rows[0]);
+		});
+});
+
+app.post('/verify', hcaptcha.middleware.validate(SECRET), (req, res) => {
+    res.json({message: 'verified!', hcaptcha: req.hcaptcha});
 });
 
 module.exports = app;

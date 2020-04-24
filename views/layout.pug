@@ -1,6 +1,7 @@
 doctype html
 html
   head
+    include meta.pug
     title= title
     link(rel='stylesheet', href='/stylesheets/base.css')
     link(rel='stylesheet', href='/include/fontawesome/css/all.min.css')
@@ -20,4 +21,8 @@ html
         else
           a(href="/", class="btn btn-link") Home
           a(href="/login", class="btn") Login
-    block content
+  block content
+  footer(class='navbar')
+    section(class='navbar-section')
+      p &copy;2020 DosLab Electronics, LLC
+    section(class='navbar-section')

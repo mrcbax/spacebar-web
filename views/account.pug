@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  div(class='panel column col-9 col-xs-12' style='margin: auto;')
+    div(class='panel-header')
+      div(class='panel-title h2') Account
+    div(class='panel-nav')
+      ul(class='tab tab-block')
+        li(class='tab-item active')
+          a(onClick='switch_tab(this)' id='general') General
+        li(class='tab-item')
+          a(onClick='switch_tab(this)' id='api') API
+        li(class='tab-item')
+          a(onClick='switch_tab(this)' id='security') Security
+    div(class='panel-body' id='items')
+      div(id='general' style='display: block;')
+        p in General
+      div(id='api' style='display: none;')
+        p in API
+      div(id='security' style='display: none;')
+        p in Security
+    div(class='panel-footer')
+    script.
+      function switch_tab(e) {
+        var children = e.parentElement.parentElement.children;
+        for (var i = 0; i < children.length; i++) {
+          children[i].classList.remove('active');
+        }
+        e.parentElement.classList.add('active');
+        var items = document.getElementById('items').children;
+        for (var i = 0; i < items.length; i++) {
+          if (items[i].id == e.id) {
+            items[i].style.display = 'block';
+          } else {
+            items[i].style.display = 'none';
+          }
+        }
+      }

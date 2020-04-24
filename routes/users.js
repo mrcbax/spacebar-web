@@ -1,9 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
 router.get('/', async function(req, res) {
-  res.send('respond with a resource');
+    if(req.user) {
+        res.render('account', {logged_in: true});
+    } else {
+        res.redirect('/login');
+    }
 });
 
 module.exports = router;

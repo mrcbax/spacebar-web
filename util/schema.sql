@@ -1,4 +1,4 @@
-CREATE USER username WITH password 'password';
+CREATE USER spacebars WITH password 'testpassword';
 CREATE DATABASE spacebars;
 \c spacebars
 
@@ -12,6 +12,7 @@ CREATE TABLE users (
        api_secret TEXT NOT NULL,
        is_admin BOOLEAN NOT NULL
 );
+GRANT ALL PRIVILEGES ON TABLE users TO spacebars;
 
 CREATE TABLE spacebars (
        id BIGSERIAL PRIMARY KEY,
@@ -22,3 +23,4 @@ CREATE TABLE spacebars (
        description TEXT,
        url TEXT
 );
+GRANT ALL PRIVILEGES ON TABLE spacebars TO spacebars;

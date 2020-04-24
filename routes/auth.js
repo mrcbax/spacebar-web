@@ -4,8 +4,7 @@ var passport = require('passport');
 
 router.post('/login',
          passport.authenticate('local', { successRedirect: '/dashboard',
-                                          failureRedirect: '/login',
-                                          failureFlash: true })
+                                          failureRedirect: '/login'})
         );
 
 router.get('/login', async function(req, res) {

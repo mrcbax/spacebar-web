@@ -6,7 +6,7 @@ block content
       div(class='panel-title')
         h2(style='text-align: center;') Login
     div(class='panel-body')
-      form(action='/login' method='post' class='form-group')
+      form(action='/login' method='post' class='form-group' id='login')
         div
           label(class="form-label") Username:
           input(type='text' name='username' placeholder='Username' class="form-input")
@@ -31,7 +31,11 @@ block content
             }
         div
           br
-          input(type='submit' value='Login' class='btn btn-primary' style='width: 100%;')
+          button(class='h-captcha btn btn-primary' style='width: 100%;' data-sitekey='a52487fc-7531-4942-839c-5ac4c2f382e5' data-callback='submit') Login
+          script.
+            function submit(token) {
+              document.getElementById("login").submit();
+            }
     div(class='panel-footer')
       div(class='container')
         div(class='columns')

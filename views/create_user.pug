@@ -1,12 +1,15 @@
 extends layout
 
 block content
+  script(src='https://hcaptcha.com/1/api.js' async defer)
   div(class='panel column col-4 col-xs-12' style='margin: auto;')
     div(class='panel-header')
       div(class='panel-title')
         h2(style='text-align: center;') Create Account
+        if nomatch
+          div(class='toast toast-error') Passwords do not match.
     div(class='panel-body')
-      form(action='/login' method='post' class='form-group')
+      form(action='/signup' method='post' class='form-group')
         div
           label(class="form-label") Username:
           input(type='text' name='username' placeholder='Username' class="form-input alpha-no-spaces")
@@ -25,7 +28,13 @@ block content
           input(type='password' name='password' placeholder='Password' class='form-input')
         div
           br
-          input(type='submit' value='Create Account' class='btn btn-primary' style='width: 100%;')
+          div(class='h-captcha' data-sitekey='a52487fc-7531-4942-839c-5ac4c2f382e5' data-callback="enable")
+          script.
+            function enable() {
+              document.getElementById('submit').disabled = false;
+            }
+          br
+          input(type='submit' id='submit' value='Create Account' class='btn btn-primary' disabled style='width: 100%;')
     div(class='panel-footer')
       div(class='container')
         div(class='columns')

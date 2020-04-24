@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  script(src='https://hcaptcha.com/1/api.js' async defer)
   div(class='panel column col-4 col-xs-12' style='margin: auto;')
     div(class='panel-header')
       div(class='panel-title')
@@ -21,7 +22,13 @@ block content
             $("#code").mask('AAAAAAAA-AAAA-AAAA-AAAA-AAAAAAAAAAAA', {'translation': {A: {pattern: /[0-9A-Fa-f]/}}});
         div
           br
-          input(type='submit' value='Reset Password' class='btn btn-primary' style='width: 100%;')
+          div(class='h-captcha' data-sitekey='a52487fc-7531-4942-839c-5ac4c2f382e5' data-callback="enable")
+          script.
+            function enable() {
+              document.getElementById('submit').disabled = false;
+            }
+          br
+          input(type='submit' id='submit' value='Reset Password' class='btn btn-primary' disabled style='width: 100%;')
     div(class='panel-footer')
       div(class='container')
         div(class='columns')

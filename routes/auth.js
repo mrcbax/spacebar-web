@@ -8,15 +8,18 @@ router.post('/login',
         );
 
 router.get('/login', async function(req, res) {
-    var failed = false;
-    if(req.query.failed) {
-        failed = true;
+    if(req.user) {
+        res.redirect('/dashboard');
+    } else {
+        var failed = false;
+        if(req.query.failed) {
+            failed = true;
+        }
+        res.render('login', { title: 'Log In', logged_in: false, failed: failed});
     }
-    res.render('login', { title: 'Log In', logged_in: false, failed: failed});
 });
 
 router.get('/logout', async function(req, res){
-    loggedIn = false;
     req.logout();
     res.redirect('/');
 });

@@ -18,16 +18,23 @@ router.get('/', async function(req, res, next) {
     });
 });
 
+router.get('/privacy', async function(req, res, next) {
+    res.render('privacy', {
+        title: 'Privacy Policy',
+        logged_in: false
+    });
+});
+
 router.get('/forgot', async function(req, res, next) {
     res.render('forgot', {
-        title: 'Spacebars',
+        title: 'Forgot Password',
         logged_in: false
     });
 });
 
 router.get('/forgot_api', async function(req, res, next) {
     res.render('forgot_api', {
-        title: 'Spacebars',
+        title: 'Forgot Password',
         logged_in: false
     });
 });
@@ -45,7 +52,7 @@ router.get('/signup', async function(req, res, next) {
     }
     if(!req.user) {
         res.render('create_user', {
-            title: 'Spacebars',
+            title: 'Sign Up',
             logged_in: false,
             nomatch: nomatch,
             taken: taken,

@@ -1,0 +1,37 @@
+extends layout
+
+block content
+  div(class='panel col-9 col-xs-12' style='margin: auto;')
+    div(class='panel-header')
+      h1(class=h1) Terms & Privacy Policy
+    div(class='panel-body')
+      h3(class='h3') Introduction
+      p Spacebars is provided by DosLab Electronics, LLC. We take your privacy seriously.
+      p By using this service or visiting this website you agree to these terms and conditions/privacy policy.
+      h3(class='h3') Disclaimer
+      p By using this service or visiting this website you agree to hold harmless DosLab Electronics, LLC and its partners/subsidiaries/owners.
+      h3(class='h3') Information
+      p Information collected by this service is utilized strictly to provide the service and is not sold, transferred, or used for any other purpose besides the reasons listed in the External Services section. Your data will not be transferred from the servers providing this service unless being included in encrypted server backups to secure locations, or transferred with your permission.
+      h3(class='h3') Security
+      p Your password is hashed using bcrypt. Our servers are protected with leading security solutions including the following:
+      ul
+        li Fail2Ban
+        li PortSentry
+        li NGINX Proxies/Filtering
+        li Passwordless Public Key Authentication
+        li Cloudflare
+        li Let's Encrypt
+      h3(class='h3') External Services
+      p This site utilizes hCaptcha, their terms and conditions apply only to pages that utilize hCaptcha:
+      ul
+        li
+          a(href='https://hcaptcha.com/privacy') https://hcaptcha.com/privacy
+        li
+          a(href='https://hcaptcha.com/terms') https://hcaptcha.com/terms
+      p This site utilizes Cloudflare, by accessing this site via Cloudflare portions of the following terms/privacy policy may apply:
+      ul
+        li
+          a(href='https://www.cloudflare.com/privacypolicy/') https://www.cloudflare.com/privacypolicy/
+        li
+          a(href='https://www.cloudflare.com/website-terms/') https://www.cloudflare.com/website-terms/
+    div(class='panel-footer')

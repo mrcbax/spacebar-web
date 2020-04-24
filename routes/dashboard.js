@@ -19,7 +19,7 @@ router.get('/', async function(req, res){
                 spacebar: ''
             }
         ];
-        res.render('dashboard', {spacebars: spacebar, logged_in: true});
+        res.render('dashboard', {title: 'Dashboard', spacebars: spacebar, logged_in: true});
     } else {
         res.redirect('/login');
     }

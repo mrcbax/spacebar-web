@@ -14,7 +14,7 @@ block content
           code curl https://api.spaceba.rs/reset_account?key=api_key_here?secret=api_secret_here
         p This will return a reset code that you can input in the form below.
     div(class='panel-body')
-      form(action='/login' method='post' class='form-group')
+      form(action='/forgot_api' method='post' class='form-group')
         div
           label(class="input-label") Unique Reset Code:
           input(type='text' name='code' id='code' placeholder='XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX' class='form-input code' pattern='[0-9A-Fa-f]{8}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{4}-[0-9A-Fa-f]{12}' style='font-family: monospace;')

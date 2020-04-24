@@ -33,36 +33,62 @@ router.get('/forgot_api', async function(req, res, next) {
 });
 
 router.get('/signup', async function(req, res, next) {
-    var nomatch = false;
+    var nomatch,taken,error = false;
     if(req.query.nomatch) {
         nomatch = true;
+    }
+    if(req.query.taken) {
+        taken = true;
+    }
+    if(req.query.error) {
+        error = true;
     }
     if(!req.user) {
         res.render('create_user', {
             title: 'Spacebars',
             logged_in: false,
-            nomatch: nomatch
+            nomatch: nomatch,
+            taken: taken,
+            error: error
         });
     } else {
         res.redirect('login');
     }
 });
 
-router.post('/signup', function(req, res, next) {
+router.post('/signup', async function(req, res, next) {
     console.log(req.body);
+    try {
+        const query = "SELECT id FROM users WHERE username = $1 OR email = $2";
+        const resp = await db.query(query, [req.body.username, req.body.email]);
+        console.log(resp);
+        if (resp.rows[0]) {
+            res.redirect('/signup?taken=true');
+        }
+    } catch (e) {
+        console.log(e);
+        res.redirect('/signup?error=true');
+    }
     if (req.body.password[0] == req.body.password[1]) {
         var shasum = crypto.createHash('sha1');
         var sha256sum = crypto.createHash('sha256');
         bcrypt.hash(req.body.password[0], saltRounds, async function(err, hash) {
-            console.log(err);
+            if(err) {
+                res.redirect('/signup?error=true');
+            }
             var salt = makeid(16);
             shasum.update(salt + req.body.email + salt);
             var public = shasum.digest('hex');
             sha256sum.update(salt + req.body.password[0] + salt);
-            var private = sha512sum.digest('hex');
-            const query = "INSERT INTO users (username, email, password, api_salt, api_public, api_secret, is_admin) VALUES ($1,$2,$3,$4,$5,$6,false)";
-            const resp = await db.query(query, [req.body.username, req.body.email, hash, salt, public, private]);
-            res.redirect('/login');
+            var private = sha256sum.digest('hex');
+            try {
+                const query = "INSERT INTO users (username, email, password, api_salt, api_public, api_secret, is_admin) VALUES ($1,$2,$3,$4,$5,$6,false)";
+                const resp = await db.query(query, [req.body.username, req.body.email, hash, salt, public, private]);
+                res.redirect('/login');
+            } catch (e) {
+                console.log(e);
+                res.redirect('/signup?error=true');
+            }
         });
     } else {
         res.redirect('/signup?nomatch=true');

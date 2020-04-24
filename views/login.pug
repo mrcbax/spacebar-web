@@ -5,6 +5,8 @@ block content
     div(class='panel-header')
       div(class='panel-title')
         h2(style='text-align: center;') Login
+      if failed
+        div(class='toast toast-error') Username or password incorrect.
     div(class='panel-body')
       form(action='/login' method='post' class='form-group' id='login')
         div

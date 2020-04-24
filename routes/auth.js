@@ -4,11 +4,15 @@ var passport = require('passport');
 
 router.post('/login',
          passport.authenticate('local', { successRedirect: '/dashboard',
-                                          failureRedirect: '/login'})
+                                          failureRedirect: '/login?failed=true'})
         );
 
 router.get('/login', async function(req, res) {
-    res.render('login', { title: 'Log In', logged_in: false});
+    var failed = false;
+    if(req.query.failed) {
+        failed = true;
+    }
+    res.render('login', { title: 'Log In', logged_in: false, failed: failed});
 });
 
 router.get('/logout', async function(req, res){

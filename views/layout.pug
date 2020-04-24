@@ -9,18 +9,22 @@ html
     script(src='/scripts/jquery.mask.js')
     script(src='/scripts/common.js')
   body
-    header(class="navbar")
-      section(class="navbar-section")
-        a(href="/", class="navbar-brand mr-2")
-          h1(class="title") Spacebars
-      section(class="navbar-section")
+    header(class='navbar')
+      section(class='navbar-section')
+        a(href='/', class='navbar-brand mr-2')
+          h1(class='title') Spacebars
+      section(class='navbar-section')
+          h1(class='h1') DEVELOPMENT SERVER, DATABASE IS WIPED DAILY
+          br
+          h1(class='h1') DO NOT USE
+      section(class='navbar-section')
         if logged_in
-          a(href="/dashboard", class="btn btn-link") Dashboard
-          a(href="/account" class='btn btn-link') Account
-          a(href="/logout", class='btn') Logout
+          a(href='/dashboard', class='btn btn-link') Dashboard
+          a(href='/account' class='btn btn-link') Account
+          a(href='/logout', class='btn') Logout
         else
-          a(href="/", class="btn btn-link") Home
-          a(href="/login", class="btn") Login
+          a(href='/', class='btn btn-link') Home
+          a(href='/login', class='btn') Login
   block content
   footer(class='navbar')
     section(class='navbar-section')

@@ -14,21 +14,21 @@ block content
           div(class='toast toast-error') An error occurred.
     div(class='panel-body')
       form(action='/signup' method='post' class='form-group')
-        div
-          label(class="form-label") Username:
+        div(class='input-group')
+          span(class="input-group-addon" style='width: 16ch;') Username
           input(type='text' name='username' placeholder='Username' class="form-input alpha-no-spaces")
           script.
             $('.alpha-no-spaces').mask("A", {translation: {"A": { pattern: /[\w\-\_]/, recursive: true }}});
-        div
-          label(class="form-label") Email:
+        div(class='input-group')
+          span(class="input-group-addon" style='width: 16ch;') Email
           input(type='email' id='email' name='email' placeholder='email@example.com' class="form-input alpha-no-spaces")
           script.
             $('#email').mask("A", {translation: {"A": { pattern: /[\w@\-\.\+\_]/, recursive: true }}});
-        div
-          label(class="form-label") Password:
+        div(class='input-group')
+          span(class="input-group-addon" style='width: 16ch;') Password
           input(type='password' name='password' placeholder='Password' class='form-input')
-        div
-          label(class="form-label") Repeat Password:
+        div(class='input-group')
+          span(class="input-group-addon" style='width: 16ch;') Repeat Password
           input(type='password' name='password' placeholder='Password' class='form-input')
         div
           br

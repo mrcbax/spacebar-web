@@ -9,12 +9,12 @@ block content
         div(class='toast toast-error') Username or password incorrect.
     div(class='panel-body')
       form(action='/login' method='post' class='form-group' id='login')
-        div
-          label(class="form-label") Username:
-          input(type='text' name='username' placeholder='Username' class="form-input")
-          label(class="form-label") Password:
         div(class='input-group')
-          input(type='password' name='password' placeholder='Password' id='password' class='form-input')
+          span(class='input-group-addon' style='width: 10ch;') Username
+          input(type='text' name='username' class="form-input")
+        div(class='input-group')
+          label(class='input-group-addon' style='width: 10ch;') Password
+          input(type='password' name='password' id='password' class='form-input')
           a(class='btn btn-primary input-group-btn' onClick='show()')
             i(class='fa fa-eye-slash' id='toggle')
           script.

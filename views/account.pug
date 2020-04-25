@@ -1,31 +1,49 @@
 extends layout
 
 block content
-  div(class='modal modal-sm' id='api_regenerate')
-    a(onClick='close_api()' class='modal-overlay' aria-label='Close')
-    div(class='modal-container')
+  mixin api_modal
+     a(onClick='close_api()' class='modal-overlay' aria-label='Close')
+     div(class='modal-container')
       div(class='modal-header')
         button(onClick='close_api()' class='btn btn-clear float-right' aria-label='Close')
         div(class='modal-title h5') Regenerate API Keys
       div(class='modal-body')
         div(class='content')
+          if api_incorrect
+            p(class='toast toast-error' id='api_incorrect') Password incorrect.
+          if api_error
+            p(class='toast toast-error' id='api_error') An error occurred.
+          p(class='toast toast-error' style='display: none;' id='api_error') An error occured, please try again later.
           p(class='toast toast-error') This will regenerate your API keys which will invalidate the old keys!
           p Type your password to confirm this action:
-          div(class='imput-group')
-            input(type='password' id='api_password' class='form-input' placeholder='Password')
-      div(class='modal-footer input-group')
-        button(class='btn btn-primary' style='width: 100%' onClick='regenerate_keys()') REGENERATE KEYS
-    script.
-      function close_api() {
-        document.getElementById("api_regenerate").classList.remove("active");
-      }
-      function open_api() {
-        document.getElementById("api_regenerate").classList.add("active");
-      }
-      function regenerate_keys() {
-        console.log(document.getElementById("api_password").value);
-        close_api();
-      }
+          form(action='/account/regen_api' method='post')
+            div(class='input-group')
+              input(type='password' name='api_password' id='api_password' class='form-input' placeholder='Password')
+            input(type='submit' class='btn btn-primary' style='width: 100%' value='REGENERATE KEYS')
+      div(class='modal-footer')
+
+  if api_error
+    div(class='modal modal-sm active' id='api_regenerate')
+      +api_modal
+  else if api_incorrect
+    div(class='modal modal-sm active' id='api_regenerate')
+      +api_modal
+  else
+    div(class='modal modal-sm' id='api_regenerate')
+      +api_modal
+
+  script.
+    function close_api() {
+      console.log("in close_api");
+      document.getElementById("api_regenerate").classList.remove("active");
+    }
+    function open_api() {
+      document.getElementById("api_regenerate").classList.add("active");
+    }
+    function show_error() {
+    console.log("in show_error");
+      document.getElementById("api_error").style.display = "block";
+    }
   div(class='panel column col-7 col-xs-12' style='margin: auto;')
     div(class='panel-header')
       div(class='panel-title h2') Account
@@ -47,10 +65,10 @@ block content
           input(type='text' class='form-input' value=email)
       div(id='api' style='display: none;')
         div(class='input-group')
-          span(class='input-group-addon' style='width: 12ch;') Public Key
+          span(class='input-group-addon' style='width: 11ch;') Public Key
           input(type='text' class='form-input' value=api_public style='font-family: Monospace;')
         div(class='input-group')
-          span(class='input-group-addon' style='width: 12ch;') Secret Key
+          span(class='input-group-addon' style='width: 11ch;') Secret Key
           input(type='password' name='secret' id='secret' class='form-input' value=api_secret style='font-family: Monospace;')
           a(class='btn btn-primary input-group-btn' onClick='show()')
             i(class='fa fa-eye-slash' id='toggle')

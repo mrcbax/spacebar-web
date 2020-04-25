@@ -77,7 +77,7 @@ app.use(function(err, req, res, next) {
 });
 
 passport.use(new LocalStrategy((username, password, cb) => {
-		db.query('SELECT id, username, password, email, api_public, api_secret, is_admin FROM users WHERE username=$1', [username], (err, result) => {
+		db.query('SELECT id, username, password, email, api_public, api_secret, password, is_admin FROM users WHERE username=$1', [username], (err, result) => {
 			  if(err) {
 				    return cb(err);
 			  }
@@ -86,7 +86,7 @@ passport.use(new LocalStrategy((username, password, cb) => {
 				    const first = result.rows[0];
 				    bcrypt.compare(password, first.password, function(err, res) {
 					      if(res) {
-						        return cb(null, { id: first.id, username: first.username, type: first.type });
+						        return cb(null, { id: first.id, username: first.username, is_admin: first.is_admin });
 					      } else {
 						        return cb(null, false);
 					      }
@@ -102,7 +102,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, cb) => {
-		db.query('SELECT id, username, email, api_public, api_secret, is_admin FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
+		db.query('SELECT id, username, email, api_public, api_secret, password, is_admin FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
 			  if(err) {
 				    return cb(err);
 			  }

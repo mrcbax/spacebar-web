@@ -7,7 +7,9 @@ router.get('/', async function(req, res) {
             title: 'Account',
             logged_in: true,
             username: req.user.username,
-            email: req.user.email
+            email: req.user.email,
+            api_public: req.user.api_public,
+            api_secret: req.user.api_secret
                   });
     } else {
         res.redirect('/login');

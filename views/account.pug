@@ -1,7 +1,7 @@
 extends layout
 
 block content
-  div(class='panel column col-9 col-xs-12' style='margin: auto;')
+  div(class='panel column col-7 col-xs-12' style='margin: auto;')
     div(class='panel-header')
       div(class='panel-title h2') Account
     div(class='panel-nav')
@@ -14,7 +14,12 @@ block content
           a(onClick='switch_tab(this)' id='security') Security
     div(class='panel-body' id='items')
       div(id='general' style='display: block;')
-        p in General
+        div(class='input-group')
+          span(class='input-group-addon') Username
+          input(type='text' class='form-input' value=username)
+        div(class='input-group')
+          span(class='input-group-addon') Email
+          input(type='text' class='form-input' value=email)
       div(id='api' style='display: none;')
         p in API
       div(id='security' style='display: none;')

@@ -77,7 +77,7 @@ app.use(function(err, req, res, next) {
 });
 
 passport.use(new LocalStrategy((username, password, cb) => {
-		db.query('SELECT id, username, password, is_admin FROM users WHERE username=$1', [username], (err, result) => {
+		db.query('SELECT id, username, password, email, api_public, api_secret, is_admin FROM users WHERE username=$1', [username], (err, result) => {
 			  if(err) {
 				    return cb(err);
 			  }
@@ -102,7 +102,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, cb) => {
-		db.query('SELECT id, username, is_admin FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
+		db.query('SELECT id, username, email, api_public, api_secret, is_admin FROM users WHERE id = $1', [parseInt(id, 10)], (err, results) => {
 			  if(err) {
 				    return cb(err);
 			  }

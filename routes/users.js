@@ -39,7 +39,7 @@ async function regen_api(uid, email, password) {
     var private = sha256sum.digest('hex');
     try {
         const query = "UPDATE users SET api_public = $1, api_secret = $2, api_salt = $3 WHERE id = $4";
-        const resp = db.query(query, [public, private, salt, uid]);
+        const resp = await db.query(query, [public, private, salt, uid]);
         return true;
     } catch (e) {
         return false;

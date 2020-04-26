@@ -12,8 +12,7 @@ block content
           if api_incorrect
             p(class='toast toast-error' id='api_incorrect') Password incorrect.
           if api_error
-            p(class='toast toast-error' id='api_error') An error occurred.
-          p(class='toast toast-error' style='display: none;' id='api_error') An error occured, please try again later.
+            p(class='toast toast-error' id='api_error') An error occurred, please try again later.
           p(class='toast toast-error') This will regenerate your API keys which will invalidate the old keys!
           p Type your password to confirm this action:
           form(action='/account/regen_api' method='post')
@@ -47,6 +46,16 @@ block content
   div(class='panel column col-7 col-xs-12' style='margin: auto;')
     div(class='panel-header')
       div(class='panel-title h2') Account
+      if api_success
+        p(class='toast toast-success animated fadeOut delay-5s' id='api_success') Keys generated successfully.
+      if pass_success
+        p(class='toast toast-success animated fadeOut delay-5s' id='pass_success') Password changed successfully.
+      if pass_incorrect
+        p(class='toast toast-error animated fadeOut delay-5s' id='pass_incorrect') Old password incorrect.
+      if pass_error
+        p(class='toast toast-error animated fadeOut delay-5s' id='pass_error') An error occurred, please try again later.
+      if pass_nomatch
+        p(class='toast toast-error animated fadeOut delay-5s' id='pass_nomatch') The new password did not match.
     div(class='panel-nav')
       ul(class='tab tab-block')
         li(class='tab-item active')
@@ -57,6 +66,7 @@ block content
           a(onClick='switch_tab(this)' id='security') Security
     div(class='panel-body' id='items')
       div(id='general' style='display: block;')
+        h4(class='h4') Account Info
         div(class='input-group')
           span(class='input-group-addon' style='width: 10ch;') Username
           input(type='text' class='form-input' value=username)
@@ -64,6 +74,7 @@ block content
           span(class='input-group-addon' style='width: 10ch;') Email
           input(type='text' class='form-input' value=email)
       div(id='api' style='display: none;')
+        h4(class='h4') API Keys
         div(class='input-group')
           span(class='input-group-addon' style='width: 11ch;') Public Key
           input(type='text' class='form-input' value=api_public style='font-family: Monospace;')
@@ -89,7 +100,18 @@ block content
               }
             }
       div(id='security' style='display: none;')
-        p in Security
+        h4(class='h4') Change Password
+        form(action='/account/change_password' method='post')
+          div(class='input-group')
+            span(class='input-group-addon' style='width: 16ch;') Old Password
+            input(type='password' name='old_password' class='form-input')
+          div(class='input-group')
+            span(class='input-group-addon' style='width: 16ch;') New Password
+            input(type='password' name='new_password' class='form-input')
+          div(class='input-group')
+            span(class='input-group-addon' style='width: 16ch;') Repeat Password
+            input(type='password' name='repeat_password' class='form-input')
+          input(type='submit' class='btn btn-primary' value='Change Password' style='width: 100%')
     div(class='panel-footer')
     script.
       function switch_tab(e) {

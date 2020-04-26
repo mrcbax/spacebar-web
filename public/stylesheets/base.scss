@@ -8,7 +8,7 @@ $grey-light-color: #616161;
 
 @import 'spectre/src/spectre';
 @import 'fonts.scss';
-@import 'animate/animate.min.css';
+@use 'animate/animate.min.css';
 
 body {
     font-family: 'Archivo', $body-font-family;

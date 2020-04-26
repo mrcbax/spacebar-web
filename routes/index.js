@@ -4,8 +4,6 @@ var db = require('../util/database.js');
 const bcrypt = require('bcrypt');
 var crypto = require('crypto');
 
-const saltRounds = 10;
-
 /* GET home page. */
 router.get('/', async function(req, res, next) {
     var logged_in = false ;
@@ -79,7 +77,7 @@ router.post('/signup', async function(req, res, next) {
     if (req.body.password[0] == req.body.password[1]) {
         var shasum = crypto.createHash('sha1');
         var sha256sum = crypto.createHash('sha256');
-        bcrypt.hash(req.body.password[0], saltRounds, async function(err, hash) {
+        bcrypt.hash(req.body.password[0], 10, async function(err, hash) {
             if(err) {
                 res.redirect('/signup?error=true');
             }

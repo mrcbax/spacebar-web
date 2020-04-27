@@ -65,7 +65,7 @@ block content
               td
                 button(class="btn btn-primary btn-copy" data-clipboard-target=`#copy${index}`)
                   i(class='far fa-copy' style='vertical-align: top;')
-                p(id=`copy${index}`)= val.spacebar
+                p(id=`copy${index}` style='display: none')= val.spacebar
       tfoot
         tr
           th Created

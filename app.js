@@ -9,6 +9,7 @@ var bodyParser = require("body-parser");
 var hcaptcha = require('express-hcaptcha');
 var cors = require('cors');
 const bcrypt = require('bcrypt');
+var helmet = require('helmet');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -54,6 +55,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
+app.use(helmet());
+app.use(helmet.referrerPolicy({ policy: 'same-origin' }));
 
 app.use('/', indexRouter);
 app.use('/account', usersRouter);

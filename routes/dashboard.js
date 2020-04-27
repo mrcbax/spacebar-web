@@ -27,7 +27,7 @@ router.post('/create', async function (req, res) {
     if(req.user) {
         if (req.body.name) {
             try {
-                var dec = Math.random() * Number.MAX_SAFE_INTEGER;
+                var dec = Math.trunc(Math.random() * Number.MAX_SAFE_INTEGER);
                 const query = "INSERT INTO spacebars (owner_id, created, spacebar, name, description, url) VALUES ($1, now(), $2, $3, $4, $5)";
                 const resp = await db.query(query, [req.user.id, dec, sanitizer.sanitize(req.body.name), sanitizer.sanitize(req.body.description), sanitizer.escape(req.body.url)]);
                 res.redirect('/dashboard?create_success=true');

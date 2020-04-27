@@ -63,9 +63,9 @@ block content
               td
                 a(href=val.loc)= val.loc
               td
-                button(class="btn btn-primary btn-copy" data-clipboard-target=`#${index}copy`)
+                button(class="btn btn-primary btn-copy" data-clipboard-target=`#copy${index}`)
                   i(class='far fa-copy' style='vertical-align: top;')
-                p(id=`${index}copy`)= val.spacebar
+                p(id=`copy${index}`)= val.spacebar
       tfoot
         tr
           th Created

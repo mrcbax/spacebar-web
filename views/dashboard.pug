@@ -78,8 +78,8 @@ block content
       script(type='text/javascript').
         $(document).ready(function() {
         var clipboard = new ClipboardJS(document.getElementsByClassName('btn-copy'));
-        clipboard.on('success' function(e){});
-        clipboard.on('error' function(e){console.log(e)});
+        clipboard.on('success', function(e){});
+        clipboard.on('error', function(e){console.log(e)});
           $('#spacebars').DataTable({
             responsive: true,
             "columnDefs": [

@@ -3,15 +3,58 @@ extends layout
 block content
   link(rel='stylesheet', href='/include/datatables.css')
 
-  table(id='spacebars', class='display compact table-striped table-hover', style='width:100%')
-        thead
-            tr
-              th Created
-              th Name
-              th Description
-              th Location
-              th Spacebar
-        tbody
+  if error
+    p(class='toast toast-error' id='error') Failed to load the Dashboard, please contact support.
+  if delete_success
+    p(class='toast toast-success animated fadeOut delay-5s' id='delete_success') Spacebar successfully deleted.
+  if delete_error
+    p(class='toast toast-error animated fadeOut delay-5s' id='delete_error') Failed to delete Spacebar.
+  if create_success
+    p(class='toast toast-success animated fadeOut delay-5s' id='create_success') Spacebar successfully created.
+  if create_missing
+    p(class='toast toast-error animated fadeOut delay-5s' id='create_missing') A field was missing, please try again.
+  if create_error
+    p(class='toast toast-error animated fadeOut delay-5s' id='create_error') Encountered an error while creating the Spacebar, please try again later.
+  unless error
+    div(class='modal modal-md' id='create')
+      a(onClick='close_create()' class='modal-overlay' aria-label='Close')
+      div(class='modal-container')
+        div(class='modal-header')
+          button(onClick='close_create()' class='btn btn-clear float-right' aria-label='Close')
+          div(class='modal-title h5') Create a Spacebar
+        div(class='modal-body')
+          div(class='content')
+            form(action='/dashboard/create' method='post')
+              div(class='input-group')
+                span(class='input-group-addon' style='width: 12ch;') Name
+                input(type='text' name='name' id='name' class='form-input' required='true')
+              div(class='input-group')
+                span(class='input-group-addon' style='width: 12ch;') Description
+                textarea(name='description' id='description' class='form-input')
+              div(class='input-group')
+                span(class='input-group-addon' style='width: 12ch;' placeholder='https://example.com') URL
+                input(type='url' name='url' id='url' class='form-input')
+              input(type='submit' class='btn btn-primary' style='width: 100%' value='Create')
+        div(class='modal-footer')
+    button(class='btn btn-primary' onClick='show_create()')
+      i(class='far fa-plus-square') &nbsp;New
+    script.
+      function show_create() {
+        document.getElementById("create").classList.add("active");
+      }
+      function close_create() {
+        document.getElementById("create").classList.remove("active");
+      }
+    table(id='spacebars', class='display compact table-striped table-hover', style='width:100%')
+      thead
+          tr
+            th Created
+            th Name
+            th Description
+            th Location
+            th Spacebar
+      tbody
+        if spacebars
           each val, index in spacebars
             tr
               td= val.date
@@ -21,26 +64,26 @@ block content
                 a(href=val.loc)= val.loc
               td
                 button(class="btn btn-primary btn-copy" data-clipboard-target=`#${index}`)
-                  p(id=index)= val.spacebar
-                    i(class='far fa-copy' style='vertical-align: top;')
-        tfoot
-            tr
-              th Created
-              th Name
-              th Description
-              th Location
-              th Spacebar
+                  i(class='far fa-copy' style='vertical-align: top;')
+                p(id=index)= val.spacebar
+      tfoot
+        tr
+          th Created
+          th Name
+          th Description
+          th Location
+          th Spacebar
 
-  script(src='/include/datatables.js')
-  script(type='text/javascript').
-    $(document).ready(function() {
-      $('#spacebars').DataTable({
-        responsive: true,
-        "columnDefs": [
-          { "width": "13ch", "targets": 0},
-          { "width": "10%", "targets": 3},
-          { "width": "1%", "className": "text-center", "targets": 4 }
-        ]
-       });
-    });
-  script(src='/scripts/clipboard.js')
+      script(src='/include/datatables.js')
+      script(type='text/javascript').
+        $(document).ready(function() {
+          $('#spacebars').DataTable({
+            responsive: true,
+            "columnDefs": [
+              { "width": "13ch", "targets": 0},
+              { "width": "10%", "targets": 3},
+              { "width": "1%", "className": "text-center", "targets": 4 }
+            ]
+           });
+        });
+      script(src='/scripts/clipboard.js')

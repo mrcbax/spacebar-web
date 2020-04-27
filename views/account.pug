@@ -33,14 +33,12 @@ block content
 
   script.
     function close_api() {
-      console.log("in close_api");
       document.getElementById("api_regenerate").classList.remove("active");
     }
     function open_api() {
       document.getElementById("api_regenerate").classList.add("active");
     }
     function show_error() {
-    console.log("in show_error");
       document.getElementById("api_error").style.display = "block";
     }
   div(class='panel column col-7 col-xs-12' style='margin: auto;')
